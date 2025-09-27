@@ -63,7 +63,7 @@ Instalação rápida:
 ## Como adicionar novos dados
   Substitua ou atualize o arquivo Excel (mega_sena_asloterias_ate_concurso_XXXX_sorteio.xlsx) mantendo a mesma estrutura:
   * Concurso	Data	bola 1	bola 2	bola 3	bola 4	bola 5	bola 6
-  * Para baixar um arquivo atualizado, acesse o site: https://asloterias.com.br/todos-resultados-mega-sena#google_vignette 
+  * Para baixar um arquivo atualizado, acesse o site: https://asloterias.com.br/todos-resultados-mega-sena#google_vignette <br>
      <img width="287" height="335" alt="image" src="https://github.com/user-attachments/assets/1560335a-1fc1-46cf-8577-a9790d5f9e61" />
   * Substitua dentro do diretório do projeto o arquivo que era o último concurso até o momento desse projeto: mega_sena_asloterias_ate_concurso_2919_sorteio.xlsx
   * Altere dentro do arquivo "app.py" na linha número 20 o nome do arquvio atualizado.
