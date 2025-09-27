@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador Mega-Sena IA</title>
+
+    <!-- Favicon (trevo) -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/trevo.png') }}">
+
+    <!-- Bootstrap local -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">🍀 Mega-Sena - Números sugeridos pelo modelo de IA</h1>
+
+    <div class="card p-4 shadow mb-4 text-center" id="resultado">
+        <h4 class="mb-3">6 números sugeridos para o próximo concurso</h4>
+    
+        <!-- Loader -->
+        <div id="loader-container">
+            <div class="loader"></div>
+            <p>Calculando melhores probabilidades...</p>
+        </div>
+    
+        <!-- Números previstos (inicialmente escondidos) -->
+        <div id="numeros-previstos" class="mt-3" style="display:none;"></div>
+    </div>    
+
+    <div class="card p-4 shadow text-center">
+        <h4 class="mb-3">Top 10 números mais prováveis</h4>
+        <canvas id="grafico" style="display:none;"></canvas>
+    </div>
+</div>
+</body>
+<footer class="footer">
+    &copy; 2025 Mateus Menezes
+</footer>
+</html>

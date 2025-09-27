@@ -1,0 +1,50 @@
+/* Loader animado */
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #81c995;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto; /* centraliza horizontalmente */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+/* Container do loader e texto */
+#loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* centraliza horizontalmente */
+    justify-content: center;  /* centraliza verticalmente */
+    gap: 15px;                /* espaço entre loader e texto */
+    min-height: 120px;        /* altura mínima do card */
+    text-align: center;
+    padding: 40px 0;
+}
+
+.numero-circulo {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    border-radius: 50%;
+    background-color: #81c995;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: #6c757d; /* cinza claro */
+    font-size: 0.9rem;
+}
