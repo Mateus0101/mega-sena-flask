@@ -51,7 +51,7 @@ Instalação rápida:
 
 ## Como funciona
   1. O backend lê os dados do arquivo Excel com os resultados da Mega-Sena.
-  2. Treina um modelo de Random Forest com os últimos N concursos para prever os próximos números.
+  2.  Treina um modelo de Random Forest com os últimos N concursos para prever os próximos números.
   3. Exibe na tela os 6 números sugeridos e o Top 10 de números mais prováveis em um gráfico.
   4. Um loader animado mostra que o sistema está processando os dados enquanto a IA calcula as probabilidades.
 
@@ -62,8 +62,12 @@ Instalação rápida:
 
 ## Como adicionar novos dados
   Substitua ou atualize o arquivo Excel (mega_sena_asloterias_ate_concurso_XXXX_sorteio.xlsx) mantendo a mesma estrutura:
-
-  Concurso	Data	bola 1	bola 2	bola 3	bola 4	bola 5	bola 6
+  * Concurso	Data	bola 1	bola 2	bola 3	bola 4	bola 5	bola 6
+  * Para baixar um arquivo atualizado, acesse o site: https://asloterias.com.br/todos-resultados-mega-sena#google_vignette 
+     <img width="287" height="335" alt="image" src="https://github.com/user-attachments/assets/1560335a-1fc1-46cf-8577-a9790d5f9e61" />
+  * Substitua dentro do diretório do projeto o arquivo que era o último concurso até o momento desse projeto: mega_sena_asloterias_ate_concurso_2919_sorteio.xlsx
+  * Altere dentro do arquivo "app.py" na linha número 20 o nome do arquvio atualizado.
+  * Observação: Será feita uma pesquisa para possibilidade de integrar esse projeto a uma API para facilitar esse processo de não precisar de atualizar os dados manualmente.
 
 ## Licença
   MIT License
