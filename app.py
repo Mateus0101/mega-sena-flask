@@ -17,7 +17,7 @@ def gerar_numeros():
     # -----------------------------
     # 1. Ler Excel
     # -----------------------------
-    arquivo = "mega_sena_asloterias_ate_concurso_2919_sorteio.xlsx"
+    arquivo = "mega_sena_asloterias_ate_concurso_2920_sorteio.xlsx"
     df = pd.read_excel(arquivo)
 
     # Detectar linha do cabeçalho correto
