@@ -34,6 +34,7 @@ mega-sena-flask/ <br>
   * numpy
   * scikit-learn
   * requests
+  
 Instalação rápida:
   pip install -r requirements.txt
 
