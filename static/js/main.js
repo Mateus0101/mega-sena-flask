@@ -1,6 +1,11 @@
 window.addEventListener("DOMContentLoaded", () => {
     fetch("/gerar_numeros")
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro na resposta do servidor: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             // Esconde loader
             document.getElementById("loader-container").style.display = "none";
@@ -19,6 +24,11 @@ window.addEventListener("DOMContentLoaded", () => {
                 container.appendChild(div);
             });
 
+            // Mostra quantos concursos foram usados no treino
+            const infoConcursos = document.getElementById("info-concursos");
+            infoConcursos.textContent = `Baseado em ${data.concursos_usados} concursos históricos.`;
+            infoConcursos.style.display = "block";
+
             // Mostra o gráfico
             const ctx = document.getElementById("grafico").getContext("2d");
             document.getElementById("grafico").style.display = "block";
@@ -30,8 +40,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     datasets: [{
                         label: "Probabilidade",
                         data: data.top10.map(t => t[1]),
-                        backgroundColor: "#81c995",
-                        borderColor: "rgba(75, 192, 192, 1)",
+                        backgroundColor: "#198754",
+                        borderColor: "#146c43",
                         borderWidth: 1
                     }]
                 },
@@ -39,5 +49,9 @@ window.addEventListener("DOMContentLoaded", () => {
                     scales: { y: { beginAtZero: true } }
                 }
             });
+        })
+        .catch(() => {
+            document.getElementById("loader-container").style.display = "none";
+            document.getElementById("erro-container").style.display = "block";
         });
 });
