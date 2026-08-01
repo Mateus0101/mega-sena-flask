@@ -13,6 +13,7 @@ app = Flask(__name__)
 # -----------------------------
 API_URL = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena"
 ARQUIVO = "resultados.csv"
+JANELA = 15  # quantidade de concursos recentes usados como features para prever o próximo
 
 # -----------------------------
 # Função para atualizar resultados
@@ -38,12 +39,21 @@ def atualizar_resultados():
     concurso = int(ultimo_concurso) + 1
 
     while True:
-        resp = requests.get(f"{API_URL}/{concurso}")
+        try:
+            resp = requests.get(f"{API_URL}/{concurso}", timeout=10)
+        except requests.exceptions.RequestException:
+            break
+
         if resp.status_code != 200:
             break
-        dados = resp.json()
-        bolas = [int(b) for b in dados["dezenasSorteadasOrdemSorteio"]]
-        data_apuracao = dados.get("dataApuracao", "")
+
+        try:
+            dados = resp.json()
+            bolas = [int(b) for b in dados["dezenasSorteadasOrdemSorteio"]]
+            data_apuracao = dados.get("dataApuracao", "")
+        except (ValueError, KeyError):
+            break
+
         novos.append([dados["numero"], data_apuracao] + bolas)
         concurso += 1
 
@@ -77,16 +87,17 @@ def gerar_numeros():
     # -----------------------------
     # 2. Preparar dados para IA
     # -----------------------------
+    # df (e portanto "sorteios") está ordenado do concurso mais recente (índice 0)
+    # para o mais antigo. Para cada concurso i, usamos os JANELA concursos
+    # imediatamente ANTERIORES a ele (índices i+1 .. i+JANELA, que são mais
+    # antigos) como features para prever o próprio concurso i.
     sorteios = df[["Bola1", "Bola2", "Bola3", "Bola4", "Bola5", "Bola6"]].values.tolist()
     mlb = MultiLabelBinarizer(classes=range(1, 61))
     y = mlb.fit_transform(sorteios)
 
-    # 70% dos concursos para treino
-    N = int(len(y) * 0.7)
-
     X, Y = [], []
-    for i in range(N, len(y)):
-        X.append(y[i - N:i].flatten())
+    for i in range(len(y) - JANELA):
+        X.append(y[i + 1:i + 1 + JANELA].flatten())
         Y.append(y[i])
     X = np.array(X)
     Y = np.array(Y)
@@ -100,9 +111,17 @@ def gerar_numeros():
     # -----------------------------
     # 4. Prever próximo concurso
     # -----------------------------
-    ultimos_n = y[-N:].flatten().reshape(1, -1)
+    # Os JANELA concursos mais recentes conhecidos (índices 0..JANELA-1)
+    # servem de base para prever o próximo concurso, ainda não sorteado.
+    ultimos_n = y[:JANELA].flatten().reshape(1, -1)
     probabilidades = clf.predict_proba(ultimos_n)
-    prob_array = np.array([p[:, 1] for p in probabilidades]).flatten()
+
+    # Para números que nunca saíram (ou sempre saíram) nas amostras de treino,
+    # clf.classes_[i] pode conter só uma classe -> a coluna da classe "1" não existe.
+    prob_array = np.array([
+        p[:, list(classes).index(1)] if 1 in classes else np.zeros(p.shape[0])
+        for p, classes in zip(probabilidades, clf.classes_)
+    ]).flatten()
 
     # -----------------------------
     # 5. Ranking dos números mais prováveis

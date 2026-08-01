@@ -57,7 +57,10 @@ Instalação rápida:
   3. Treina um modelo de Random Forest com os últimos N concursos para prever os próximos números.
   4. Exibe na tela os 6 números sugeridos e o Top 10 de números mais prováveis em um gráfico.
   5. Um loader animado indica que o sistema está processando os dados enquanto a IA calcula as probabilidades.
-  6. Se quiser mudar o percentual de concursos para usar no treino da IA, altere o código -> N = int(len(y) * 0.7) no arquivo "app.py" linha 85 o mesmo significa que 70% dos concursos estão sendo utilizados para treino por padrão.
+  6. Se quiser mudar quantos concursos recentes são usados como base para a previsão, altere a constante JANELA no início do arquivo "app.py" (por padrão, 15 concursos).
+
+## Aviso
+  A Mega-Sena é um sorteio aleatório e independente: nenhum modelo estatístico ou de IA consegue prever seus resultados de fato. Este projeto é um estudo/experimento com Machine Learning, não um preditor confiável de números.
     
 
 ## UI
